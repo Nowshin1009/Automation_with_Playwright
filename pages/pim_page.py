@@ -30,7 +30,7 @@ def search_employee(self, name: str):
     elif no_record_locator.is_visible(timeout=3000):
         print(f"No records found for '{name}'.")
     else:
-        raise AssertionError(f"❌ Unexpected search state for '{name}'.")
+        raise AssertionError(f"Unexpected search state for '{name}'.")
 
     def add_employee(self, first: str, middle: str, last: str):
         self.add_employee_link.click()
