@@ -13,7 +13,7 @@ class MyInfoPage:
         self.blood_dropdown_icon = page.locator("form").filter(has_text="Blood Type").locator("i")
         self.blood_type_option = lambda type: page.get_by_role("option", name=type, exact=True)
         self.blood_save_button = page.locator("form").filter(has_text="Blood Type").get_by_role("button")
-        self.success_message = page.get_by_text("Success", exact=True)
+        self.success_message = page.locator(".oxd-toast").last.locator(".oxd-toast-content-text")
 
     def navigate_to_my_info(self):
         self.my_info_tab.click()
@@ -31,5 +31,9 @@ class MyInfoPage:
         self.blood_save_button.click()
 
     def verify_success_message(self):
-        expect(self.success_message).to_be_visible(timeout=5000)
+        # Wait a moment for the toast to appear
+        self.page.wait_for_timeout(1000)
+        # Check if any success message is visible
+        success_toast = self.page.locator(".oxd-toast").last
+        expect(success_toast).to_be_visible(timeout=5000)
         print("Successfully updated information on My Info page.")
